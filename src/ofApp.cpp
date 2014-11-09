@@ -33,11 +33,11 @@ void ofApp::update()
 staggerUpdate--;
 
    // video.update();
-    //if (staggerUpdate<=0){
+    if (staggerUpdate<=0){
     grab.update();
-   // staggerUpdate = 5;
+    staggerUpdate = 10;
 
-   // }
+    }
     if (grab.isFrameNew())
     {
         //frames.push_front(grab.getPixelsRef());
@@ -87,15 +87,18 @@ void ofApp::draw()
     sumY += countour.blobs[i].boundingRect.y;
 
     }
+    if(countour.blobs.size()>0){
     sumX /= countour.blobs.size();
     sumY /= countour.blobs.size();
-
+    }
+//thresh = sumX;
         for (int x = 0; x<greyDiff.getWidth(); x++)
     {
-       // int pixY = ofMap(sumY, 0, ofGetHeight(), 0, video.getHeight());
+
+        //int pixY = ofMap(sumY, 0, ofGetHeight(), 0, video.getHeight());
         //ofColor c = pixels.getColor(x, pixY);
-       // ofSetColor(c);
-      //  ofLine(x, 0, x, greyDiff.getHeight());
+        //ofSetColor(c);
+        //ofLine(x, 0, x, greyDiff.getHeight());
     }
 
     ofPopMatrix();
@@ -105,7 +108,10 @@ void ofApp::draw()
     grab.draw(0, 0, grab.getWidth(), grab.getHeight());
     for(int i = 0 ; i<haarFinder.blobs.size(); i++)
     {
-        //haarFinder.blobs[i].draw(0,0);
+        haarFinder.blobs[i].draw(0,0);
+    }
+    if (haarFinder.blobs.size()>0){
+        //doStopMotion = true;
     }
     ofSetColor(255);
     ofTranslate(grab.getWidth()+10, 0);
